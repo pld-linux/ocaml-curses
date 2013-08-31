@@ -50,34 +50,30 @@ developing applications that use %{name}.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%{_libdir}/ocaml
+export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib
 install -d $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
 ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
-
-install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/curses
-mv $OCAMLFIND_DESTDIR/curses/META $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/curses
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{_libdir}/ocaml/curses
-%exclude %{_libdir}/ocaml/curses/*.mli
-%if %{with opt}
-%exclude %{_libdir}/ocaml/curses/*.a
-%exclude %{_libdir}/ocaml/curses/*.cmxa
-%exclude %{_libdir}/ocaml/curses/*.cmx
-%endif
-%attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
-%{_libdir}/ocaml/stublibs/*.so.owner
 %{_libdir}/ocaml/site-lib/curses
+%exclude %{_libdir}/ocaml/site-lib/curses/*.mli
+%if %{with opt}
+%exclude %{_libdir}/ocaml/site-lib/curses/*.a
+%exclude %{_libdir}/ocaml/site-lib/curses/*.cmxa
+%exclude %{_libdir}/ocaml/site-lib/curses/*.cmx
+%endif
+%attr(755,root,root) %{_libdir}/ocaml/site-lib/stublibs/*.so
+%{_libdir}/ocaml/site-lib/stublibs/*.so.owner
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/ocaml/curses/*.mli
+%{_libdir}/ocaml/site-lib/curses/*.mli
 %if %{with opt}
-%{_libdir}/ocaml/curses/*.a
-%{_libdir}/ocaml/curses/*.cmxa
-%{_libdir}/ocaml/curses/*.cmx
+%{_libdir}/ocaml/site-lib/curses/*.a
+%{_libdir}/ocaml/site-lib/curses/*.cmxa
+%{_libdir}/ocaml/site-lib/curses/*.cmx
 %endif
