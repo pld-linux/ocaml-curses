@@ -5,7 +5,7 @@
 Summary:	OCaml bindings for ncurses
 Name:		ocaml-curses
 Version:	1.0.3
-Release:	1
+Release:	7
 License:	LGPL v2+
 Group:		Development/Libraries
 Source0:	http://download.savannah.gnu.org/releases/ocaml-tmk/%{name}-%{version}.tar.gz
@@ -54,6 +54,9 @@ export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%{_libdir}/ocaml
 install -d $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
 ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
 
+install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/curses
+mv $OCAMLFIND_DESTDIR/curses/META $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/curses
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -68,6 +71,7 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/*.so
 %{_libdir}/ocaml/stublibs/*.so.owner
+%{_libdir}/ocaml/site-lib/curses
 
 %files devel
 %defattr(644,root,root,755)
