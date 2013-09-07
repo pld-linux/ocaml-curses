@@ -5,7 +5,7 @@
 Summary:	OCaml bindings for ncurses
 Name:		ocaml-curses
 Version:	1.0.3
-Release:	7
+Release:	8
 License:	LGPL v2+
 Group:		Development/Libraries
 Source0:	http://download.savannah.gnu.org/releases/ocaml-tmk/%{name}-%{version}.tar.gz
@@ -66,6 +66,8 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_libdir}/ocaml/site-lib/curses/*.cmxa
 %exclude %{_libdir}/ocaml/site-lib/curses/*.cmx
 %endif
+# XXX: proper packaging this would be?
+%dir %{_libdir}/ocaml/site-lib/stublibs
 %attr(755,root,root) %{_libdir}/ocaml/site-lib/stublibs/*.so
 %{_libdir}/ocaml/site-lib/stublibs/*.so.owner
 
