@@ -1,11 +1,16 @@
 #
 # Conditional build:
-%bcond_without	opt		# build opt
+%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+
+# not yet available on x32 (ocaml 4.02.1), remove when upstream will support it
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%undefine	with_ocaml_opt
+%endif
 
 Summary:	OCaml bindings for ncurses
 Name:		ocaml-curses
 Version:	1.0.3
-Release:	9
+Release:	10
 License:	LGPL v2+
 Group:		Development/Libraries
 Source0:	http://download.savannah.gnu.org/releases/ocaml-tmk/%{name}-%{version}.tar.gz
@@ -46,13 +51,13 @@ developing applications that use %{name}.
 %configure \
 	--enable-widec
 
-%{__make} all opt
+%{__make} all %{?with_ocaml_opt:opt}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 export OCAMLFIND_DESTDIR=$RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib
 install -d $OCAMLFIND_DESTDIR $OCAMLFIND_DESTDIR/stublibs
-ocamlfind install curses META *.cmi *.cmx *.cma *.cmxa *.a *.so *.mli
+ocamlfind install curses META *.cmi *.cma %{?with_ocaml_opt:*.cmx *.cmxa *.a} *.so *.mli
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -61,7 +66,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/ocaml/site-lib/curses
 %exclude %{_libdir}/ocaml/site-lib/curses/*.mli
-%if %{with opt}
+%if %{with ocaml_opt}
 %exclude %{_libdir}/ocaml/site-lib/curses/*.a
 %exclude %{_libdir}/ocaml/site-lib/curses/*.cmxa
 %exclude %{_libdir}/ocaml/site-lib/curses/*.cmx
@@ -74,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/ocaml/site-lib/curses/*.mli
-%if %{with opt}
+%if %{with ocaml_opt}
 %{_libdir}/ocaml/site-lib/curses/*.a
 %{_libdir}/ocaml/site-lib/curses/*.cmxa
 %{_libdir}/ocaml/site-lib/curses/*.cmx
