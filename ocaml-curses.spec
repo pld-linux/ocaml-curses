@@ -51,7 +51,7 @@ developing applications that use %{name}.
 %configure \
 	--enable-widec
 
-%{__make} all %{?with_ocaml_opt:opt}
+%{__make} -j1 all %{?with_ocaml_opt:opt}
 
 %install
 rm -rf $RPM_BUILD_ROOT
