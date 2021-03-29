@@ -73,11 +73,6 @@ install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{site-lib/curses,stublibs}
 cp -p *.cmx $RPM_BUILD_ROOT%{_libdir}/ocaml/curses
 %endif
 
-%{__mv} $RPM_BUILD_ROOT%{_libdir}/ocaml/{,site-lib/}curses/META
-cat <<EOF >>$RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/curses/META
-directory="+curses"
-EOF
-
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/ocaml/stublibs/*.so.owner
 
 %clean
@@ -86,6 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %dir %{_libdir}/ocaml/curses
+%{_libdir}/ocaml/curses/META
 %{_libdir}/ocaml/curses/*.cmi
 %{_libdir}/ocaml/curses/curses.cma
 %dir %{_libdir}/ocaml/stublibs
@@ -94,10 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/ocaml/curses/curses.mli
+%{_libdir}/ocaml/curses/libcurses_stubs.a
 %if %{with ocaml_opt}
 %{_libdir}/ocaml/curses/*.cmx
 %{_libdir}/ocaml/curses/curses.a
 %{_libdir}/ocaml/curses/curses.cmxa
-%{_libdir}/ocaml/curses/libcurses_stubs.a
 %endif
-%{_libdir}/ocaml/site-lib/curses
