@@ -10,12 +10,12 @@
 Summary:	OCaml bindings for ncurses
 Summary(pl.UTF-8):	Wiązania OCamla do ncurses
 Name:		ocaml-curses
-Version:	1.0.3
-Release:	13
+Version:	1.0.4
+Release:	1
 License:	LGPL v2+
 Group:		Development/Libraries
 Source0:	http://download.savannah.gnu.org/releases/ocaml-tmk/%{name}-%{version}.tar.gz
-# Source0-md5:	3c11b46b7c057f8fd110ace319589877
+# Source0-md5:	d99dce720b60cfc7297ca77b5be4aa8d
 URL:		http://savannah.nongnu.org/projects/ocaml-tmk/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	gawk
@@ -52,6 +52,8 @@ z użyciem biblioteki OCamla curses.
 %setup -q
 
 %build
+%{__libtoolize}
+%{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %configure \
