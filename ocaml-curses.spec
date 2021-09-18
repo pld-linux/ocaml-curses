@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+%bcond_without	ocaml_opt	# native optimized binaries (bytecode is always built)
 
 # not yet available on x32 (ocaml 4.02.1), remove when upstream will support it
 %ifnarch %{ix86} %{x8664} %{arm} aarch64 ppc sparc sparcv9
@@ -23,7 +23,6 @@ BuildRequires:	ncurses-devel >= 5
 BuildRequires:	ocaml >= 1:3.10.2
 BuildRequires:	ocaml-findlib >= 1.3.3-3
 ExcludeArch:	sparc64 s390 s390x
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %requires_eq	ocaml-runtime
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -80,15 +79,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc CHANGES
 %dir %{_libdir}/ocaml/curses
 %{_libdir}/ocaml/curses/META
-%{_libdir}/ocaml/curses/*.cmi
 %{_libdir}/ocaml/curses/curses.cma
 %dir %{_libdir}/ocaml/stublibs
 %attr(755,root,root) %{_libdir}/ocaml/stublibs/dllcurses_stubs.so
 
 %files devel
 %defattr(644,root,root,755)
+%{_libdir}/ocaml/curses/*.cmi
 %{_libdir}/ocaml/curses/curses.mli
 %{_libdir}/ocaml/curses/libcurses_stubs.a
 %if %{with ocaml_opt}
