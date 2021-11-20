@@ -11,7 +11,7 @@ Summary:	OCaml bindings for ncurses
 Summary(pl.UTF-8):	Wiązania OCamla do ncurses
 Name:		ocaml-curses
 Version:	1.0.4
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		Development/Libraries
 Source0:	http://download.savannah.gnu.org/releases/ocaml-tmk/%{name}-%{version}.tar.gz
